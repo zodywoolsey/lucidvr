@@ -16,7 +16,6 @@ onready var gui = $Viewport/gui
 onready var node_quad = $RigidBody/Quad
 onready var node_area = $RigidBody/Quad/Area
 onready var node_area_collision = $RigidBody/Quad/Area/CollisionShape
-onready var node_back_quad = $RigidBody/Quad/MeshInstance
 onready var node_box = $RigidBody/MeshInstance
 
 var selected
@@ -29,7 +28,6 @@ func _ready():
 		set_process(false)
 	node_viewport.size = Vector2(gui.margin_right, gui.margin_bottom)
 	node_quad.mesh.size = Vector2(gui.margin_right/1000.0, gui.margin_bottom/1000.0)
-	node_back_quad.mesh.size = Vector2(gui.margin_right/1000.0, gui.margin_bottom/1000.0)
 	node_box.mesh.size = Vector3(gui.margin_right/1000.0, gui.margin_bottom/1000.0, 0.04)
 	node_area_collision.shape.extents = Vector3(node_quad.mesh.size.x/2.0,node_quad.mesh.size.y/2.0, .01)
 	
