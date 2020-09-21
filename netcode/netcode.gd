@@ -8,7 +8,7 @@ const PORT = 5000
 
 var id
 
-onready var vrscene = get_node("startup")
+onready var vrscene = get_node("Viewport/startup")
 
 var nettestpanel
 var nettestconnectbutton
@@ -92,7 +92,7 @@ func nettestconnectbuttonpressed():
 func nettesthostbuttonpressed():
 	var server = NetworkedMultiplayerENet.new()
 	server.create_server(PORT,5)
-	get_tree().set_network_peer(server)
+	get_tree().network_peer = server
 	get_tree().connect("network_peer_connected", self, "_client_connected")
 	get_tree().connect("network_peer_disconnected", self, "_client_disconnected")
 
