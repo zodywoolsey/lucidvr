@@ -8,8 +8,6 @@ var uiRay
 var grabShader
 var handcollider
 
-var otherHandGrab
-
 var grabDown = false
 var triggerDown = false
 
@@ -48,12 +46,11 @@ var useObject = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	handGrab = findNode('rightHandGrab')
-	otherHandGrab = findNode('leftHandGrab')
-	handArea = findNode('rightHandArea')
-	handBody = findNode('rightHandBody')
-	handRay = findNode('rightHandRay')
-	uiRay = findNode('rightUiRay')
+	handGrab = findNode('HandGrab')
+	handArea = findNode('HandArea')
+	handBody = findNode('HandBody')
+	handRay = findNode('HandRay')
+	uiRay = findNode('UiRay')
 	grabShader = load('res://handGrabMaterial.tres')
 	handcollider = findNode('handcolliderr')
 
@@ -80,19 +77,17 @@ func _physics_process(delta):
 			grabbedObject.active = true
 		if !useObject:
 			grabbedObject.active = false
-	if otherHandGrab.get_node_b() == handGrab.get_node_b():
-		handGrab.set_node_b('')
-		grabbedObject = null
 	if grabbedObject && !grabbed:
 		handGrab.set_node_b("")
-		grabbedObject.active = false
+		if( grabbedObject.is_in_group("useable")):
+			grabbedObject.active = false
 		grabbedObject = null
 	if triggerDown:
 		applyGrabShader()
 #	if !grabbed:
 #		handArea.get_overlapping_bodies()
 			
-func _on_rightHand_button_pressed(button):
+func _on_Hand_button_pressed(button):
 	print(button)
 	if button == 2:
 		grabDown = true
@@ -116,7 +111,7 @@ func _on_rightHand_button_pressed(button):
 		uiRay.enabled = false
 		uiRay.hide()
 
-func _on_rightHand_button_release(button):
+func _on_Hand_button_release(button):
 	if button == 2:
 		grabDown = false
 		if grabbed:
@@ -149,16 +144,16 @@ func _on_rightHand_button_release(button):
 			uiRay.release()
 
 
-func _on_rightHandArea_body_entered(body):
+func _on_HandArea_body_entered(body):
 	isCollided = true
 
-func _on_rightHandArea_body_exited(body):
+func _on_HandArea_body_exited(body):
 	isCollided = false
 
-func _on_rightHandArea_area_shape_entered(_areaId, area, _stupidParam, _stupidParam2):
+func _on_HandArea_area_shape_entered(_areaId, area, _stupidParam, _stupidParam2):
 	collidedArea = area
 
-func _on_rightHandArea_area_shape_exited(_areaId, _area, _stupidParam, _stupidParam2):
+func _on_HandArea_area_shape_exited(_areaId, _area, _stupidParam, _stupidParam2):
 	collidedArea = null
 
 func grab():
