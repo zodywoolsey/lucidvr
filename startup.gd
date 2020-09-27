@@ -26,12 +26,13 @@ func _ready():
 	# settingsData = settingsFile.get_line()
 	# print(settingsData)
 
-	print(ARVRServer.get_interfaces())
+	# print(ARVRServer.get_interfaces())
 
 	#for steamvr
 	interface = ARVRServer.find_interface('Oculus')
 	if interface && interface.initialize():
-		print("interface is good")
+		# print("interface is good")
+		pass
 	arServ = 'ovr'
 	Engine.iterations_per_second = 72
 

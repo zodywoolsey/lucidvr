@@ -46,13 +46,13 @@ var useObject = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	handGrab = findNode('HandGrab')
-	handArea = findNode('HandArea')
-	handBody = findNode('HandBody')
-	handRay = findNode('HandRay')
-	uiRay = findNode('UiRay')
+	handGrab = get_node('HandGrab')
+	handArea = get_node('HandArea')
+	handBody = get_node('HandBody')
+	handRay = handBody.get_node('HandRay')
+	uiRay = handBody.get_node('UiRay')
 	grabShader = load('res://handGrabMaterial.tres')
-	handcollider = findNode('handcolliderr')
+	handcollider = handBody.get_node('handcollider')
 
 
 func _physics_process(delta):
@@ -88,7 +88,6 @@ func _physics_process(delta):
 #		handArea.get_overlapping_bodies()
 			
 func _on_Hand_button_pressed(button):
-	print(button)
 	if button == 2:
 		grabDown = true
 		if rayCollidedNodeMesh:
@@ -161,7 +160,7 @@ func grab():
 		collides = handArea.get_overlapping_bodies()
 		for col in collides:
 			isGrabbable = false
-			isGrabbable = checkNodeGroups(col, 'grabbable')
+			isGrabbable = col.is_in_group('grabbable')
 			if col.get_class() == "RigidBody" && isGrabbable:
 				grabbedObject = col
 				# grabbedObject.global_transform = handBody.global_transform
@@ -183,13 +182,13 @@ func grab():
 						gravtmp = null
 					rayOn = false
 				break
-	if collidedArea != null && checkNodeGroups(collidedArea, 'spawnBox') && !grabbed:
+	if collidedArea != null && collidedArea.is_in_group('spawnBox') && !grabbed:
 		collidedArea.activate()
 		collidedArea = null
 
 func pull():
 	applyGrabShader()
-	if handRay.is_colliding() && !rayCollidedNode && handRay.get_collider().get_class() == "RigidBody" && checkNodeGroups(handRay.get_collider(), 'grabbable'):
+	if handRay.is_colliding() && !rayCollidedNode && handRay.get_collider().get_class() == "RigidBody" && handRay.get_collider().is_in_group('grabbable'):
 		rayCollidedNode = get_node(handRay.get_collider().get_path())
 		rayCollidedNodeMesh = rayCollidedNode.find_node('MeshInstance',true,true)
 		pullInterval = 0
@@ -225,19 +224,6 @@ func pull():
 		rayCollidedNode.add_force( towardVector, Vector3(0,0,0))
 
 
-func findNode(nodeName):
-	return get_node('/root').find_node(nodeName, true, false)
-
-func checkNodeGroups(node, groupName):
-	for group in node.get_groups():
-		if group == groupName:
-			return true
-	return false
-func checkNodeNameGroups(nodeName, groupName):
-	for group in findNode(nodeName).get_groups():
-		if group == groupName:
-			return true
-	return false
 
 
 func applyGrabShader():
@@ -250,7 +236,7 @@ func applyGrabShader():
 		rayCollidedNodeMesh.material_override = null
 		rayCollidedNodeMesh = null
 		tmpMat = null
-	if handRay.is_colliding() && !rayCollidedNode && handRay.get_collider().get_class() == "RigidBody" && checkNodeGroups(handRay.get_collider(), 'grabbable'):
+	if handRay.is_colliding() && !rayCollidedNode && handRay.get_collider().get_class() == "RigidBody" && handRay.get_collider().is_in_group('grabbable'):
 		rayCollidedNodeMesh = get_node(handRay.get_collider().get_path()).find_node('MeshInstance',true,true)
 		if rayCollidedNodeMesh:
 			rayCollidedNodeMesh.material_override = grabShader

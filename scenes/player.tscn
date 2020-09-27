@@ -90,7 +90,7 @@ nodes/node_a = NodePath("../HandBody")
 
 [node name="HandBody" type="KinematicBody" parent="rightHand"]
 
-[node name="handcolliderr" type="CollisionShape" parent="rightHand/HandBody"]
+[node name="handcollider" type="CollisionShape" parent="rightHand/HandBody"]
 transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0 )
 shape = SubResource( 6 )
 
@@ -148,7 +148,7 @@ precision = 1000
 collision_layer = 0
 collision_mask = 0
 
-[node name="handcolliderl" type="CollisionShape" parent="leftHand/HandBody"]
+[node name="handcollider" type="CollisionShape" parent="leftHand/HandBody"]
 shape = SubResource( 6 )
 disabled = true
 
@@ -161,6 +161,21 @@ cast_to = Vector3( 0, 5, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 mesh = SubResource( 9 )
 material/0 = ExtResource( 5 )
+
+[node name="UiRay" type="RayCast" parent="leftHand/HandBody"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
+visible = false
+cast_to = Vector3( 0, 5, 0 )
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="leftHand/HandBody/UiRay"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+material/0 = ExtResource( 3 )
 [connection signal="button_pressed" from="rightHand" to="rightHand" method="_on_Hand_button_pressed"]
 [connection signal="button_release" from="rightHand" to="rightHand" method="_on_Hand_button_release"]
 [connection signal="area_shape_entered" from="rightHand/HandArea" to="rightHand" method="_on_HandArea_area_shape_entered"]
