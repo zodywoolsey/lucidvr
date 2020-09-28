@@ -3,7 +3,7 @@ extends KinematicBody
 
 var path = []
 var pathindex = 0
-var move_speed = 5
+var move_speed = 2
 onready var nav = get_tree().root.find_node("Navigation",true,false)
 
 # Called when the node enters the scene tree for the first time.
