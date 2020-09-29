@@ -37,7 +37,7 @@ func _process(delta):
 			vertex.y = sin(vertex.y+time)
 			vertex.z = sin(vertex.z+time)
 			mdt.set_vertex(i, vertex)
-			print(vertex)
+			# print(vertex)
 
 		mesh.surface_remove(0)
 		mdt.commit_to_surface(mesh)

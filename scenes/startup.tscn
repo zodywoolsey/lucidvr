@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://startup.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/placeholdermeshes.tscn" type="PackedScene" id=5]
 [ext_resource path="res://netcode/nettest3dpanel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://enemy/enemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://weapons/multitool/tool.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 0.1, 0.1, 0.1 )
@@ -60,3 +61,6 @@ transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -
 
 [node name="enemy" parent="startup" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.11428, 0.93915, 0 )
+
+[node name="tool" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.33005, 6.56745, 0 )
