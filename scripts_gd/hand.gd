@@ -5,8 +5,10 @@ var handArea
 var handBody
 var handRay
 var uiRay
-var grabShader
+var grabShader = preload('res://handGrabMaterial.tres')
 var handcollider
+
+onready var handaudio = get_node('handaudio')
 
 var grabDown = false
 var triggerDown = false
@@ -39,6 +41,11 @@ var collidedArea = null
 
 var useObject = false
 
+#this is for sound generation lol
+var lastorigin
+var neworigin
+var audioval
+
 # var velStartTransformOrigin
 # var velEndTransformOrigin
 # var vel
@@ -51,11 +58,11 @@ func _ready():
 	handBody = get_node('HandBody')
 	handRay = handBody.get_node('HandRay')
 	uiRay = handBody.get_node('UiRay')
-	grabShader = load('res://handGrabMaterial.tres')
 	handcollider = handBody.get_node('handcollider')
 
 
 func _physics_process(delta):
+	handaudio.pulse_hz = 4+(5*((handBody.linear_velocity.length()+handBody.angular_velocity.length())/2))
 	if grabDown:
 		grab()
 	if triggerDown && grabDown && !grabbed:

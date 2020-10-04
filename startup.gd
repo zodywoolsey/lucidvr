@@ -28,12 +28,13 @@ func _ready():
 
 	# print(ARVRServer.get_interfaces())
 
-	#for steamvr
+	#server for  oculus: "Oculus"
+	#server for steamvr: "OpenVR"
 	interface = ARVRServer.find_interface('Oculus')
 	if interface && interface.initialize():
 		# print("interface is good")
 		pass
-	arServ = 'ovr'
+	# arServ = 'ovr'
 	Engine.iterations_per_second = 72
 
 	# #for oculus desktop
