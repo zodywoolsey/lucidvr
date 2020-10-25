@@ -30,7 +30,7 @@ func _ready():
 
 	#server for  oculus: "Oculus"
 	#server for steamvr: "OpenVR"
-	interface = ARVRServer.find_interface('Oculus')
+	interface = ARVRServer.find_interface('OpenVR')
 	if interface && interface.initialize():
 		# print("interface is good")
 		pass
